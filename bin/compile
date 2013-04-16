@@ -1,0 +1,38 @@
+#!/bin/bash
+# usage: bin/compile <build-dir> <cache-dir>
+
+set -eo pipefail
+
+ver=0.6
+mkdir -p "$1" "$2"
+file=de37ceb3-a17c-4297-b092-a110447de9c5.tgz
+build=$(cd "$1/" && pwd)
+cache=$(cd "$2/" && pwd)
+url="https://api.anvilworks.org/slugs/de37ceb3-a17c-4297-b092-a110447de9c5.tgz"
+buildpack=$(dirname $(dirname $0))
+
+if test -e $build/bin && ! test -d $build/bin
+then
+  echo >&2 " !     File bin exists and is not a directory."
+  exit 1
+fi
+
+if test -d $cache/rust-$ver/bin/rust
+then
+  echo "-----> Using Rust $ver"
+else
+  rm -rf $cache/* # be sure not to build up cruft
+  mkdir -p $cache/rust-$ver
+  cd $cache/rust-$ver
+  echo -n "-----> Installing rust $ver..."
+  curl -sO $url
+  tar zxf $file
+  rm -f $file
+  echo "done"
+fi
+
+PATH=$cache/rust-$ver/bin:$cache/rust-$ver/lib:$PATH
+
+cd $build
+
+make
