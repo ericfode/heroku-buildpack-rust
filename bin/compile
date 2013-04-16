@@ -33,7 +33,7 @@ fi
 
 PATH=$build/rust/rust-$ver/bin:$build/rust/rust-$ver/lib:$PATH
 
-cp $cache $build/rust 
+mv $cache $build/rust 
 
 cd $build
 echo "-----> Building app"
