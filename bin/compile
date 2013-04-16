@@ -40,5 +40,5 @@ echo "-----> Building app"
 make
 
 echo "-----> Building runtime environment"
-mkdir -p $BUILD_DIR/.profile.d
-echo "export PATH=\$HOME/rust/rust-$ver/bin:\$HOME/rust/rust-$ver/lib:\$PATH" > $BUILD_DIR/.profile.d/rust.sh
+mkdir -p $build/.profile.d
+echo "export PATH=\$HOME/rust/rust-$ver/bin:\$HOME/rust/rust-$ver/lib:\$PATH" > $build/.profile.d/rust.sh
