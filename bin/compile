@@ -31,8 +31,14 @@ else
   echo "done"
 fi
 
-PATH=$cache/rust-$ver/bin:$cache/rust-$ver/lib:$PATH
+PATH=$build/rust/rust-$ver/bin:$build/rust/rust-$ver/lib:$PATH
+
+cp $cache $build/rust 
 
 cd $build
-
+echo "-----> Building app"
 make
+
+echo "-----> Building runtime environment"
+mkdir -p $BUILD_DIR/.profile.d
+echo "export PATH=\$HOME/rust/rust-$ver/bin:\$HOME/rust/rust-$ver/lib:\$PATH" > $BUILD_DIR/.profile.d/rust.sh
