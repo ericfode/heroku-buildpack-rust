@@ -1,9 +1,10 @@
-#!/bin/bbash
+#!/bin/bash
 # usage: bin/compile <build-dir> <cache-dir>
 
 set -eo pipefail
 
-mkidr -p "$1" "$2"
+ver=0.6
+mkdir -p "$1" "$2"
 file=de37ceb3-a17c-4297-b092-a110447de9c5.tgz
 build=$(cd "$1/" && pwd)
 cache=$(cd "$2/" && pwd)
@@ -16,7 +17,7 @@ then
   exit 1
 fi
 
-if test -d $cache/rust-$ver/rust
+if test -d $cache/rust-$ver/bin/rust
 then
   echo "-----> Using Rust $ver"
 else
@@ -30,7 +31,7 @@ else
   echo "done"
 fi
 
-PATH=$cache/rust-$ver/rust/bin:$PATH
+PATH=$cache/rust-$ver/bin:$cache/rust-$ver/lib:$PATH
 
 cd $build
 
